@@ -107,6 +107,7 @@ GEM
       reline (>= 0.3.0)
     json (2.6.3)
     jsonapi-renderer (0.2.2)
+    jwt (2.7.0)
     loofah (2.20.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -236,6 +237,7 @@ DEPENDENCIES
   debug
   factory_bot_rails
   ffaker
+  jwt
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
@@ -249,4 +251,4 @@ RUBY VERSION
    ruby 3.1.2p20
 
 BUNDLED WITH
-   2.3.7
+   2.3.22
