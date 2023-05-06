@@ -17,7 +17,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: localhost
+  host: db
   port: 5432
   username: postgres
   password:
@@ -84,7 +84,4 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  database: buna_bank_api_production
-  username: buna_bank_api
-  password: <%= ENV["BUNA_BANK_API_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
