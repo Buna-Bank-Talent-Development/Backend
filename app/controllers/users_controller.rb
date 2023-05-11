@@ -17,7 +17,7 @@ class UsersController < ApplicationController
         @user = User.find_by(email: user_params[:email])
         if @user && @user.authenticate_otp(user_params[:otp_code], drift: 60)
           # OTP code is valid, generate a JWT for the user using the TokenService.
-          payload = { user_id: @user.id }
+          payload = { user_id: @user.id , name: @user.name, email: @user.email}
           token = TokenService.encode(payload)
           render json: { auth_token: token }
         else
