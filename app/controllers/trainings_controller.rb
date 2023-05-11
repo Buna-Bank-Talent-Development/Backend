@@ -5,7 +5,8 @@ class TrainingsController < ApplicationController
 
   # GET /trainings
   def index
-    @trainings = Training.all
+    @q = Training.ransack(params[:q])
+    @trainings = @q.result
 
     render json: @trainings
   end

@@ -5,7 +5,8 @@ class EmployeesController < ApplicationController
 
   # GET /employees
   def index
-    @employees = Employee.all
+    @q = Employee.ransack(params[:q])
+    @employees = @q.result
 
     render json: @employees
   end
