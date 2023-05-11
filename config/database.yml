@@ -17,16 +17,17 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: localhost
-  port: 5432
-  username: postgres
-  password:
+
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
+  host: db
+  port: 5432
+  username: postgres
+  password:
   database: buna_bank_api_development
 
   # The specified database role being used to connect to postgres.
@@ -85,6 +86,4 @@ test:
 #
 production:
   <<: *default
-  database: buna_bank_api_production
-  username: buna_bank_api
-  password: <%= ENV["BUNA_BANK_API_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
