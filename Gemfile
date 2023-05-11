@@ -9,6 +9,8 @@ gem 'active_model_serializers', '~> 0.10.13'
 
 gem 'ancestry'
 
+gem 'jwt'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 
@@ -44,3 +46,5 @@ group :development do
   gem 'database_cleaner-active_record'
   gem 'shoulda-matchers'
 end
+
+gem "roo", "~> 2.10"
