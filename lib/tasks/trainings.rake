@@ -1,36 +1,42 @@
 require 'roo'
-
+# To import using this script run the command below
+# rake db:seed:import_trainings
 namespace :db do
   namespace :seed do
     desc 'Import trainings data from custom excel sheet.'
     task import_trainings: :environment do
-      Employee.delete_all
+      Training.delete_all
 
-      path = ENV['path'] || './TrainingNeed.xlsx'
+      path = ENV['path'] || './Training Need.xlsx'
       file = File.expand_path(path, __dir__)
       xlsx = Roo::Spreadsheet.open(file)
 
-      sheet = xlsx.sheet('')
-      create_trainings(sheet)
+      sheets = ['Category-Cert', 'Category-HRD', 'Virtual']
 
-      puts "Created #{Employee.count} employees."
+      sheets.each do |i|
+        sheet = xlsx.sheet(i)
+        create_trainings(sheet, i)
+      end
+      # sheet = xlsx.sheet('Virtual')
+      # create_trainings(sheet)
+
+      puts "Created #{Training.count} trainings."
     end
 
-    def create_trainings(sheet)
+    def create_trainings(sheet, i)
 
       headers = sheet.row(1)
-      puts "Creating Trainings"
+      puts "Creating #{i} Trainings"
 
       sheet.each_with_index do |row, idx|
         next if idx <= 0
 
-        employee_data = Hash[[headers, row].transpose]
-        name = employee_data['Name of Employee'].strip
-        email = employee_data['Email Address'].strip
-        department = employee_data['Job Title'].strip
-        location = employee_data['Place of Assignment'].strip
-
-        Employee.where(full_name: name, email: email, department: department, location: location).first_or_create!
+        training_data = Hash[[headers, row].transpose]
+        # debugger
+        category = training_data['Category'].to_int
+        title = training_data['Name'].strip
+        type = training_data['Type'].strip
+        Training.where(training_title: title, training_type: type, category_id: category).first_or_create!
 
       end
     end
