@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
-    before_action :authenticate_user
+    before_action :authenticate_employee
 
     private
 
-    def authenticate_user
+    def authenticate_employee
         auth_header = request.headers['Authorization']
         if auth_header.present?
         token = auth_header.split.last
         decoded_token = TokenService.decode(token)
-        @current_user = User.find(decoded_token['user_id'])
+        @current_employee = Employee.find(decoded_token['employee_id'])
         else
         render json: { error: 'Missing or invalid Authorization header' }, status: :unauthorized
         end
