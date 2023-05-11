@@ -5,7 +5,8 @@ class CategoriesController < ApplicationController
 
   # GET /categories
   def index
-    @categories = Category.all
+    @q = Category.ransack(params[:q])
+    @categories = @q.result
 
     render json: @categories
   end
