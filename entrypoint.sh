@@ -10,6 +10,6 @@ if ! rails db:version > /dev/null 2>&1; then
   rails db:migrate
 fi
 
-
+rails db:migrate
 # Then exec the container's main process (what's set as CMD in the Dockerfile).
 exec "$@"
