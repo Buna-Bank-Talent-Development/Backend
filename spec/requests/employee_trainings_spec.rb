@@ -1,19 +1,22 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe '/employee_trainings', type: :request do
-
-  let(:valid_attributes) do {
-    training_id: create(:training).id,
-    employee_id: create(:employee).id,
-    season: FFaker::Lorem.word
-}
+  let(:valid_attributes) do
+    {
+      training_id: create(:training).id,
+      employee_id: create(:employee).id,
+      season: FFaker::Lorem.word
+    }
   end
 
-  let(:invalid_attributes) do {
-    training_id: nil,
-    employee_id: nil,
-    season: FFaker::Lorem.word
-}
+  let(:invalid_attributes) do
+    {
+      training_id: nil,
+      employee_id: nil,
+      season: FFaker::Lorem.word
+    }
   end
 
   let(:valid_headers) do
@@ -72,9 +75,10 @@ RSpec.describe '/employee_trainings', type: :request do
 
   describe 'PATCH /update' do
     context 'with valid parameters' do
-      let(:new_attributes) do {
-        season: FFaker::Lorem.word
-    }
+      let(:new_attributes) do
+        {
+          season: FFaker::Lorem.word
+        }
       end
 
       it 'updates the requested employee_training' do
