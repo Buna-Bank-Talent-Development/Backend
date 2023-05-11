@@ -1,5 +1,6 @@
 require 'roo'
-
+# To import using this script run the command below
+# rake db:seed:import_employees
 namespace :db do
   namespace :seed do
     desc 'Import employee data from custom excel sheet.'

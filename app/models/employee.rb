@@ -1,4 +1,3 @@
-
 class Employee < ApplicationRecord
   has_one_time_password
 
