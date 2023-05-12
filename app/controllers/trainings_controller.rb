@@ -6,7 +6,7 @@ class TrainingsController < ApplicationController
   # GET /trainings
   def index
     @q = Training.ransack(params[:q])
-    @trainings = @q.result
+    @trainings = @q.result(distinct: true)
 
     render json: @trainings
   end
