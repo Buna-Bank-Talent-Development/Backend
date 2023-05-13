@@ -9,4 +9,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
+  #write me a route with the conroller sepcified
+
+  post 'send_otp', to: 'auth#send_otp'
+  post 'verify_otp', to: 'auth#verify_otp'
+
 end

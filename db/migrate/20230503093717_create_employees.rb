@@ -7,7 +7,7 @@ class CreateEmployees < ActiveRecord::Migration[7.0]
       t.string :email, null: false, unique: true
       t.string :department, null: false
       t.string :location, null: false
-
+      t.string :otp_secret_key
       t.timestamps
     end
   end

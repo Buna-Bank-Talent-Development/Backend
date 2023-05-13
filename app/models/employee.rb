@@ -1,6 +1,6 @@
-# frozen_string_literal: true
-
 class Employee < ApplicationRecord
+  has_one_time_password
+
   validates :full_name, presence: true
   validates :email, presence: true
   validates :department, presence: true
