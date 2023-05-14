@@ -1,13 +1,18 @@
+databases:
+  - name: bunnabanktna
+    databaseName: bunnabanktna
+    user: bunnabanktna
+
 services:
   - type: web
-    name: bunna-tna-api
+    name: bunnabanktna
     env: ruby
-    buildCommand: docker build -t bunna-tna-api .
-    startCommand: docker run -p 10000:3000 -e DATABASE_URL=$DATABASE_URL bunna-tna-api
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
     envVars:
-      - key: RAILS_ENV
-        value: production
       - key: DATABASE_URL
         fromDatabase:
-          name: bunnabank-TNA
+          name: bunnabanktna
           property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
