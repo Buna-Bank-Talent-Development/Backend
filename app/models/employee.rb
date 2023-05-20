@@ -6,4 +6,5 @@ class Employee < ApplicationRecord
   validates :email, presence: true , uniqueness: true
   validates :department, presence: true
   validates :location, presence: true
+  validates :role , presence: true
 end
