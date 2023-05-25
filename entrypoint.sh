@@ -5,7 +5,7 @@ set -e
 rm -f /myapp/tmp/pids/server.pid
 
 if ! rails db:version > /dev/null 2>&1; then
-  # If not, create and migrate the database
+  # If not, create the database
   rails db:create
 fi
 
