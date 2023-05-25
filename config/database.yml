@@ -24,11 +24,7 @@ default: &default
 
 development:
   <<: *default
-  host: db
-  port: 5432
-  username: postgres
-  password:
-  database: buna_bank_api_development
+  url: postgres://bunnabank_tna_g2tk_user:BDRHZzCLMIwdCWuZqlRk8xCF9pYiiQFz@dpg-chg95267avjbbjts562g-a.oregon-postgres.render.com/bunnabank_tna_g2tk
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
