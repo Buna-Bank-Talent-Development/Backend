@@ -5,6 +5,7 @@ namespace :db do
   namespace :seed do
     desc 'Import employee data from custom excel sheet.'
     task import_employees: :environment do
+      EmployeeTraining.delete_all
       Employee.delete_all
 
       path = ENV['path'] || './employees.xlsx'
@@ -26,12 +27,13 @@ namespace :db do
         next if idx <= 0
 
         employee_data = Hash[[headers, row].transpose]
+        id = employee_data['ID']
         name = employee_data['Name of Employee'].strip
         email = employee_data['Email Address'].strip
         department = employee_data['Job Title'].strip
         location = employee_data['Place of Assignment'].strip
 
-        Employee.where(full_name: name, email: email, department: department, location: location).first_or_create!
+        Employee.where(id: id, full_name: name, email: email, department: department, location: location).first_or_create!
 
       end
     end
