@@ -15,7 +15,7 @@ class AuthController < ApplicationController
       def verify_otp
         
         @employee = Employee.find_by(email: employee_params[:email])
-        if @employee && @employee.authenticate_otp(employee_params[:otp_code], drift: 60)
+        if @employee && @employee.authenticate_otp(employee_params[:otp_code], drift: 300)
           payload = { employee_id: @employee.id , name: @employee.full_name, email: @employee.email, role: @employee.role}
           token = TokenService.encode(payload)
           render json: { auth_token: token }
