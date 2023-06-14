@@ -7,19 +7,21 @@ ENV RAILS_ENV=${RAILS_ENV}
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 
 # Set up working directory
-RUN mkdir /myapp
-WORKDIR /myapp
+RUN mkdir /app
+WORKDIR /app
 
 # Install gems
-COPY Gemfile /myapp/Gemfile
-COPY Gemfile.lock /myapp/Gemfile.lock
-RUN if [ "$RAILS_ENV" = "production" ]; then bundle install --without development test; else bundle install; fi
+COPY Gemfile /app/Gemfile
+COPY Gemfile.lock /app/Gemfile.lock
+
+RUN bundle config set --local without 'development test'
+RUN bundle install --jobs 20 --retry 5
 
 # Copy application files
-COPY . /myapp
+COPY . /app
 
 # Add a script to be executed every time the container starts.
-COPY entrypoint.sh /usr/bin/
+COPY ./entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000

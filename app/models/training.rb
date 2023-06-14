@@ -5,11 +5,9 @@ class Training < ApplicationRecord
 
   validates :training_title, presence: true
 
-  class Training < ApplicationRecord
-
-    def self.ransackable_attributes(auth_object = nil)
-      ['category_id', 'created_at', 'id', 'training_title', 'training_type', 'updated_at']
-    end
   
+
+  def self.ransackable_attributes(auth_object = nil)
+    ['category_id', 'created_at', 'id', 'training_title', 'training_type', 'updated_at']
   end
 end
