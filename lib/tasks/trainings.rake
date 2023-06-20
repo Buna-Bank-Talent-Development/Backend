@@ -36,6 +36,7 @@ namespace :db do
         category = training_data['Category'].to_int
         title = training_data['Name'].strip
         type = training_data['Type'].strip
+        parent = parent_category
         Training.where(training_title: title, training_type: type, category_id: category).first_or_create!
 
       end
