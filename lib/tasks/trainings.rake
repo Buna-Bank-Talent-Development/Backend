@@ -5,6 +5,7 @@ namespace :db do
   namespace :seed do
     desc 'Import trainings data from custom excel sheet.'
     task import_trainings: :environment do
+      EmployeeTraining.delete_all
       Training.delete_all
 
       path = ENV['path'] || './Training Need.xlsx'
@@ -24,6 +25,12 @@ namespace :db do
     end
 
     def create_trainings(sheet, i)
+      
+      def first_digit(num)
+        digit = num.abs.digits[-1]
+        digit *= num.negative? ? -1 : 1
+        return digit
+      end
 
       headers = sheet.row(1)
       puts "Creating #{i} Trainings"
@@ -32,12 +39,11 @@ namespace :db do
         next if idx <= 0
 
         training_data = Hash[[headers, row].transpose]
-        # debugger
         category = training_data['Category'].to_int
         title = training_data['Name'].strip
         type = training_data['Type'].strip
-        parent = parent_category
-        Training.where(training_title: title, training_type: type, category_id: category).first_or_create!
+        parent = first_digit(category)
+        Training.where(training_title: title, training_type: type, parent_category: parent, category_id: category).first_or_create!
 
       end
     end
