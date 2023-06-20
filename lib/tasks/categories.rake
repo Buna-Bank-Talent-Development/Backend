@@ -46,8 +46,14 @@ namespace :db do
         # parent = first_digit(category)
         id = category_data[''].to_int
         name = category_data[''].strip
-        ancestry = first_digit(id)
+        ancest = first_digit(id)
+        def ancestry(ancest)
+            return ancest if ancest != 0
+        end
+        ancestry = ancestry(ancest)
+
         Category.where(id: id, name: name, ancestry: ancestry).first_or_create
+
       end
     end
   end
