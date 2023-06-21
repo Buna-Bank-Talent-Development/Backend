@@ -8,43 +8,34 @@ namespace :db do
       EmployeeTraining.delete_all
       Training.delete_all
 
-      path = ENV['path'] || './Training Need.xlsx'
-      file = File.expand_path(path, __dir__)
+      path = ENV['path'] || './Trainings.xlsx'
+      file = File.expand_path(path, __dir__) 
       xlsx = Roo::Spreadsheet.open(file)
 
-      sheets = ['Category-Cert', 'Category-HRD', 'Virtual']
+      @categories = Category.all
 
-      sheets.each do |i|
-        sheet = xlsx.sheet(i)
-        create_trainings(sheet, i)
-      end
-      # sheet = xlsx.sheet('Virtual')
-      # create_trainings(sheet)
+      sheet = xlsx.sheet('Trainings')
+      create_trainings(sheet)
 
       puts "Created #{Training.count} trainings."
     end
 
-    def create_trainings(sheet, i)
-      
-      def first_digit(num)
-        digit = num.abs.digits[-1]
-        digit *= num.negative? ? -1 : 1
-        return digit
-      end
+    def create_trainings(sheet)
 
       headers = sheet.row(1)
-      puts "Creating #{i} Trainings"
+      puts "Creating Trainings"
 
       sheet.each_with_index do |row, idx|
         next if idx <= 0
 
         training_data = Hash[[headers, row].transpose]
-        category = training_data['Category'].to_int
-        title = training_data['Name'].strip
-        type = training_data['Type'].strip
-        parent = first_digit(category)
-        Training.where(training_title: title, training_type: type, parent_category: parent, category_id: category).first_or_create!
 
+
+        category = @categories.where.not(ancestry: nil).find_by(name: training_data['Sub-category'].strip)
+        parent = @categories.find_by(name: training_data['Category'].strip, ancestry: nil)
+        title = training_data['Training Title'].strip
+        
+        Training.where(training_title: title, parent_category: parent.id , category_id: category.id).first_or_create!
       end
     end
   end
