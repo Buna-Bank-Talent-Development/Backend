@@ -8,11 +8,11 @@ namespace :db do
       EmployeeTraining.delete_all
       Employee.delete_all
 
-      path = ENV['path'] || './employees.xlsx'
+      path = ENV['path'] || './Employee List.xlsx'
       file = File.expand_path(path, __dir__)
       xlsx = Roo::Spreadsheet.open(file)
 
-      sheet = xlsx.sheet('DATA January -2023')
+      sheet = xlsx.sheet('Sheet1')
       create_employees(sheet)
 
       puts "Created #{Employee.count} employees."
@@ -31,7 +31,7 @@ namespace :db do
         name = employee_data['Name of Employee'].strip
         email = employee_data['Email Address'].strip
         department = employee_data['Job Title'].strip
-        location = employee_data['Place of Assignment'].strip
+        location = employee_data['Work Unit'].strip
 
         Employee.where(id: id, full_name: name, email: email, department: department, location: location).first_or_create!
 
