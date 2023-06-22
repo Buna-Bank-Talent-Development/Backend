@@ -50,6 +50,6 @@ class TrainingsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def training_params
-    params.require(:training).permit(:training_title, :training_type, :category_id)
+    params.require(:training).permit(:training_title, :training_type, :parent_category, :category_id)
   end
 end
