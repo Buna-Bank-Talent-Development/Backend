@@ -9,7 +9,6 @@ gem 'active_model_serializers', '~> 0.10.13'
 
 gem 'ancestry'
 
-gem 'jwt'
 
 gem 'ransack'
 
